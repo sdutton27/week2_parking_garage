@@ -17,3 +17,23 @@ SIMON:
 
     PULLING FROM GITHUB:
     git pull origin main
+
+==========================================
+
+FORKING:
+
+1. Create fork clicking button (on github.com/project-you-want-to-fork)
+2. in your terminal, navigate to where you want the folder to be created
+   
+   git clone <url-from-the-fork-not-from-the-original> 
+
+(connection to local machine from fork is then called "origin")
+
+3. cd into that folder (you could also restart vscode just with that folder just in case)
+4. open it up into vscode (" code . " )
+5. *make edits*
+then UPDATING LIFECYCLE to get to commit, regular terminal COMMANDS (use origin)
+
+    1. git add . (. means all, could just upload one file, would put <filename>)
+    2. git commit -m "my message goes here" (first message is usually "first commit")
+    3. git push <remote_name> <branch> (git push origin master/main) * we want to use origin / main
