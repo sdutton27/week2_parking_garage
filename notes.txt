@@ -8,6 +8,8 @@ DANIEL:
     PULLING FROM GITHUB:
     git pull upstream main
 
+    ***dont forget to sinc fork, on github***
+
 
 SIMON:
     ADDING A FILE: 
