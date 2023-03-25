@@ -41,4 +41,19 @@ When the project is completed, commit the final changes, sync all pull requests,
 
 
 ###### List group responsiblities below:
-###### Provide name and approxamite line numbers where each person wrote their code
+###### Provide name and approximate line numbers where each person wrote their code
+
+Things to do:
+   - comment / organize code 
+   - fix edge cases**
+   - fix payment so the user has to input how much they are paying
+      - only let the user be fully paid if they have fully paid
+   - fix the input messages
+
+Extra Credit:
+   - timer
+   - print out parking spaces
+   - ask if the user is a bad driver
+      - if they are, then they take up two spaces
+      - only 1 ticket, but pay twice the amount
+   - if baddriverprice = 20 then take up two spaces
