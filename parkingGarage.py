@@ -16,84 +16,87 @@ class ParkingGarage():
         self.cost_of_ticket = 10
 
     def take_ticket(self):
+        # if there is room, take a ticket
         if self.available_spaces > 0:
             self.available_tickets -= 1
             self.available_spaces -= 1
-            print(f'there are {self.available_spaces} left. ')
+            print(f'There are {self.available_spaces} left. ')
             current_ticket = Ticket(len(self.active_tickets)+ 1, self.available_spaces, self.cost_of_ticket)
             # if bad driver 
             # current_ticket = Ticket(len(self.active_tickets)+ 1, self.available_spaces, self.cost_of_ticket * 2)
             self.active_tickets.append(current_ticket)
-            print(current_ticket.get_ticket_num())
+            print(f"Your ticket number is {current_ticket.get_ticket_num()}. Don't lose it... ")
             return input("You have taken a ticket what would you like to do now? ")
         else:
-            return input('this is full, go home ')
-
-
-
-# name = input(please say name)
-# people = [].append(name)
-# people = [].pop(name)
+            # if there is not room in the garage, tell them to go home.
+            return input('this is full, go home. ')
 
 
 # pay for parking method
-
-# if price < 10:
-#   print "you still owe money"
-
-# ticket_cost = 10
-
     def pay_for_parking(self):
         # can also have price attached to timer
-        ticket_num = int(input("What number ticket did you have? "))
-        for ticket in self.active_tickets:
-            if ticket_num == ticket.get_ticket_num(): # the ticket they are trying to pay
-                # ticket : the ticket they want to pay for
-                payment = int(input(f'The current price for your ticket is ${ticket.get_price()}.\nwhat amount would you like to pay now? '))
-                while ticket.get_paid() == False:
-                    if payment < ticket.get_price(): # if they have NOT paid full price
-                        # print
-                        print(f"You still owe {ticket.get_price() - payment}")
-                        # get more input
-                        payment += int(input("How much do you want to pay?"))
-                    # if payment does not = the cost of the ticket, then the ticket.setpaid() would be false
-                        #ticket.set_paid()
-                    elif payment == ticket.get_price(): # if they have paid full price
-                        ticket.set_paid(True)
-                    else: # if they paid MORE than they should've
-                        print("you idiot, you paid too much, we are keeping your money lol")
-                        ticket.set_paid(True)
-            print(ticket.get_paid())
-        return input("You have paid for your ticket, please leave. ")
+        try: # casting input as int doesn't break the program
+            ticket_num = int(input("What number ticket did you have? "))
+            for ticket in self.active_tickets:
+                if ticket_num == ticket.get_ticket_num(): # the ticket they are trying to pay
+                    # ticket : the ticket they want to pay for
+                    
+                    # we need an if-statement to check if the ticket has been paid for already
+                    if ticket.get_paid() == True:
+                        return input(f"You've already paid for ticket #{ticket_num}. What would you like to do instead? ")
+
+                    # if the ticket has not yet been paid for
+                    payment = int(input(f'The current price for your ticket is ${ticket.get_price()}.\nwhat amount would you like to pay now? '))
+                    while ticket.get_paid() == False:
+                        if payment < ticket.get_price(): # if they have NOT paid full price
+                            # print
+                            ticket.set_amount_owed((ticket.get_price() - payment))
+                            print(f"You still owe {ticket.get_price() - payment}")
+                            # get more input
+                            payment += int(input("How much do you want to pay?"))
+                        # if payment does not = the cost of the ticket, then the ticket.setpaid() would be false
+                            #ticket.set_paid()
+                        elif payment == ticket.get_price(): # if they have paid full price
+                            ticket.set_amount_owed(0)
+                            ticket.set_paid(True)
+                            break
+                        else: # if they paid MORE than they should've
+                            print("you idiot, you paid too much, we are keeping your money lol")
+                            ticket.set_amount_owed(0)
+                            ticket.set_paid(True)
+                            break
+                    break
+                print(ticket.get_paid())
+            else:
+                # if the number inputted is not currently an active ticket
+                return input("We could not find that ticket as an active ticket. Please try something else.") # goes back to main menu
+            
+            return input("Thank you for paying for your ticket, you have 15 minutes to leave. ")
+        except:
+            # if the user has inputted their ticket number not as a number
+            return input("Hey, your ticket number should be a number, not a letter. It's called a ticket 'number' for a reason. ")
+    
+        # OPTIONS: if the user does not have a proper ticket number (maybe they haven't taken a ticket yet)
+                        # for-else statement that says "we couldn't find that ticket"
     
 
     def leave_garage(self):
-        self.available_tickets += 1
-        self.available_spaces += 1
+        # if ticket has been paid for, allow them to leave
         ticket_num = int(input("What number ticket did you have? "))
         for ticket in self.active_tickets:
             if ticket_num == ticket.get_ticket_num():
-                self.active_tickets.remove(ticket)
+                if ticket.get_paid() == True:
+                    self.active_tickets.remove(ticket)
+                    self.available_tickets += 1
+                    self.available_spaces += 1
+                else: # if ticket has not been paid for, make them pay
+                    return input(f"You still owe {ticket.get_amount_owed()}. ") # gets back to menu
         print(len(self.active_tickets))
-        return input("Is there anything else you would like to do? ")
+        return input("You have left the garage. Is there anything else you would like to do? ")
 
     def incorrect_input(self):
         return input("Incorrect input, please try again ")
 
-#if payment isnt empty, display to user you have 15 minutes to leave.
-
-
-#update currentTicket dict key to true, if it has been paid.
-
-
-
-
-
-#leave garage method
-
-
-
-#if ticket has been paid display thank you message
 
 #if someone takes ticket:
 #   garage -= 1
@@ -105,6 +108,7 @@ class Ticket():
         self.parking_space = parking_space
         self.paid = False
         self.price = price # this is default 10 but can be modified if a bad driver
+        self.amount_owed = price # keeps track of money owed
 
     def get_ticket_num(self):
         return self.ticket_num
@@ -120,6 +124,12 @@ class Ticket():
     
     def set_paid(self, paid):
         self.paid = paid
+
+    def get_amount_owed(self):
+        return self.amount_owed
+    
+    def set_amount_owed(self, amount_left_to_pay):
+        self.amount_owed = amount_left_to_pay
 
 ###################################
 
