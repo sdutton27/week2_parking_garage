@@ -43,17 +43,32 @@ When the project is completed, commit the final changes, sync all pull requests,
 ###### List group responsiblities below:
 ###### Provide name and approximate line numbers where each person wrote their code
 
-Things to do:
-   - comment / organize code 
-   - fix edge cases** -- DONE
-      - fix payment so the user has to input how much they are paying - DONE
-      - only let the user exit if they have fully paid - DONE
-   - fix the input messages
+NOTE: When one person "wrote" the code, this is the person who 
+physically typed out the code. The other person was the 
+"driver" at this point and dictated what the other person should type. We tried to do an even split of driving/typing.
 
-Extra Credit:
-   - timer
-   - print out parking spaces
-   - ask if the user is a bad driver
-      - if they are, then they take up two spaces
-      - only 1 ticket, but pay twice the amount
-   - if baddriverprice = 20 then take up two spaces
+Who typed the code:
+Lines 1-25: Simon
+Lines 26-32: Daniel
+Lines 33-54: Simon
+Lines 55-62: Daniel
+Lines 63-64: Simon
+Lines 65-71: Daniel
+Lines 72-84: Simon
+Lines 85-112: Daniel (Simon added 'break's)
+Lines 113-115: Simon
+Lines 116-120: Daniel
+Lines 121-136: Simon
+Lines 137-144: Daniel
+Lines 145-149: Simon
+Lines 150-152: Daniel
+Lines 153-166: Simon
+Lines 167-170: Daniel
+Lines 171-177: Simon
+Lines 178-179: Daniel
+Lines 180-184: Simon
+Lines 185-210: Daniel
+Lines 211-239: Simon
+Lines 240-245: Daniel
+Lines 246-248: Simon
+Lines 249-278: Daniel wrote initial user input code, Simon added statements for handicap
