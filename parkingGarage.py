@@ -14,6 +14,7 @@ class ParkingGarage():
         self.available_tickets = spaces
         self.active_tickets = [] # list of tickets
         self.cost_of_ticket = 10
+        self.options = f'You can "enter" the garage, "pay" for your ticket, "leave" the garage, or "quit" the program. '
 
     def take_ticket(self):
         # if there is room, take a ticket
@@ -26,10 +27,10 @@ class ParkingGarage():
             # current_ticket = Ticket(len(self.active_tickets)+ 1, self.available_spaces, self.cost_of_ticket * 2)
             self.active_tickets.append(current_ticket)
             print(f"Your ticket number is {current_ticket.get_ticket_num()}. Don't lose it... ")
-            return input("You have taken a ticket what would you like to do now? ")
+            return input(f"You have taken a ticket what would you like to do now? {self.options}")
         else:
             # if there is not room in the garage, tell them to go home.
-            return input('this is full, go home. ')
+            return input(f'this is full, go home. {self.options}')
 
 
 # pay for parking method
@@ -43,7 +44,7 @@ class ParkingGarage():
                     
                     # we need an if-statement to check if the ticket has been paid for already
                     if ticket.get_paid() == True:
-                        return input(f"You've already paid for ticket #{ticket_num}. What would you like to do instead? ")
+                        return input(f"You've already paid for ticket #{ticket_num}. What would you like to do instead? {self.options}")
 
                     # if the ticket has not yet been paid for
                     payment = int(input(f'The current price for your ticket is ${ticket.get_price()}.\nwhat amount would you like to pay now? '))
@@ -69,12 +70,12 @@ class ParkingGarage():
                 print(ticket.get_paid())
             else:
                 # if the number inputted is not currently an active ticket
-                return input("We could not find that ticket as an active ticket. Please try something else.") # goes back to main menu
+                return input(f"We could not find that ticket as an active ticket. Please try something else. {self.options}") # goes back to main menu
             
-            return input("Thank you for paying for your ticket, you have 15 minutes to leave. ")
+            return input(f"Thank you for paying for your ticket, you have 15 minutes to leave. {self.options}")
         except:
             # if the user has inputted their ticket number not as a number
-            return input("Hey, your ticket number should be a number, not a letter. It's called a ticket 'number' for a reason. ")
+            return input(f"Hey, your ticket number should be a number, not a letter. It's called a ticket 'number' for a reason. {self.options}")
     
         # OPTIONS: if the user does not have a proper ticket number (maybe they haven't taken a ticket yet)
                         # for-else statement that says "we couldn't find that ticket"
@@ -82,20 +83,26 @@ class ParkingGarage():
 
     def leave_garage(self):
         # if ticket has been paid for, allow them to leave
-        ticket_num = int(input("What number ticket did you have? "))
-        for ticket in self.active_tickets:
-            if ticket_num == ticket.get_ticket_num():
-                if ticket.get_paid() == True:
-                    self.active_tickets.remove(ticket)
-                    self.available_tickets += 1
-                    self.available_spaces += 1
-                else: # if ticket has not been paid for, make them pay
-                    return input(f"You still owe {ticket.get_amount_owed()}. ") # gets back to menu
-        print(len(self.active_tickets))
-        return input("You have left the garage. Is there anything else you would like to do? ")
-
+        try:
+            ticket_num = int(input("What number ticket did you have? "))
+            for ticket in self.active_tickets:
+                    if ticket_num == ticket.get_ticket_num():
+                        if ticket.get_paid() == True:
+                            self.active_tickets.remove(ticket)
+                            self.available_tickets += 1
+                            self.available_spaces += 1
+                            break
+                        else: # if ticket has not been paid for, make them pay
+                            return input(f"You still owe {ticket.get_amount_owed()}. {self.options}") # gets back to menu
+                            break
+            #print(len(self.active_tickets))
+            else: #if the number isnt active then have them try something else.
+                return input(f"The ticket number you provided isnt in the list of active tickets, please try something else. {self.options}")
+            return input(f"You have left the garage. Is there anything else you would like to do? {self.options}")
+        except:
+            return input(f"Please put a number and not anything else. {self.options}")
     def incorrect_input(self):
-        return input("Incorrect input, please try again ")
+        return input(f"Incorrect input, please try again {self.options}")
 
 
 #if someone takes ticket:
@@ -136,7 +143,7 @@ class Ticket():
 spaces = 5
 garage = ParkingGarage(5)
 
-answer = input('Welcome to the parking garage, what would you like to do? ')
+answer = input(f'Welcome to the parking garage, what would you like to do? {self.options}')
 while True:
     if answer.lower() == "enter":
         answer = garage.take_ticket()

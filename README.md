@@ -45,7 +45,7 @@ When the project is completed, commit the final changes, sync all pull requests,
 
 Things to do:
    - comment / organize code 
-   - fix edge cases**
+   - fix edge cases** -- DONE
       - fix payment so the user has to input how much they are paying - DONE
       - only let the user exit if they have fully paid - DONE
    - fix the input messages
